@@ -59,7 +59,7 @@ public class ItemRegistry {
         return this.jsonTree == null || this.jsonObject.get("mod_id") == null ? "minecraft" : this.jsonObject.get("mod_id").getAsString();
     }
 
-    private net.minecraft.item.Item registerItem(String name, net.minecraft.item.Item item) {
+    private PluginItem registerItem(String name, PluginItem item) {
         return Registry.register(Registries.ITEM, new Identifier(this.getModId(), name), item);
     }
 
@@ -81,7 +81,7 @@ public class ItemRegistry {
             for (Item item : items) {
 
                 FromJson.LOGGER.info(item.id);
-                net.minecraft.item.Item wat = this.registerItem(item.id, new net.minecraft.item.Item(new FabricItemSettings()));
+                PluginItem wat = this.registerItem(item.id, new PluginItem(new FabricItemSettings()));
 
             }
 
