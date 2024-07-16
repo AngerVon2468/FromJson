@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "fromjson",
+	"version": "1.0.0",
+	"name": "FromJson",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Mavity The Madity"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": ""
+	},
+	"license": "ARR",
+	"icon": "assets/fromjson/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"wiiu.mavity.fromjson.FromJson"
+		]
+	},
+	"mixins": [
+		"fromjson.mixins.json"
+	],
+	"depends": {
+		"fabricloader": "*",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
