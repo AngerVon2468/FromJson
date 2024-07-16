@@ -1,0 +1,12 @@
+{
+    "experimental_features": true,
+    "plugins": [
+        {
+            "id": "WiiU"
+        },
+        {
+            "id": "Minecraft",
+            "isStable": true
+        }
+    ]
+}

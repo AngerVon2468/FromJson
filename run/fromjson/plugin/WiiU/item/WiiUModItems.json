@@ -1,0 +1,11 @@
+{
+    "mod_id": "wiiu",
+    "items": [
+        {
+            "id": "wiiu"
+        },
+        {
+            "id": "gamepad"
+        }
+    ]
+}
