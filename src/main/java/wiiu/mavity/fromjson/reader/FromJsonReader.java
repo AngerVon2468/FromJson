@@ -8,7 +8,7 @@ import wiiu.mavity.fromjson.plugin.Plugin;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.List;
+import java.util.*;
 
 public class FromJsonReader {
 
@@ -32,9 +32,7 @@ public class FromJsonReader {
         } catch (IOException ioException) {
             FromJson.LOGGER.info(ioException.toString());
         }
-        /*
-        FromJson.LOGGER.info(getWiiUIsBased() + "");
-        */
+        FromJson.LOGGER.info("experimental_features: " + getExperimentalFeatures());
 
     }
 
@@ -73,7 +71,7 @@ public class FromJsonReader {
 
     static {
 
-        if (jsonTree != null && jsonTree.isJsonObject()) {
+        if (jsonTree != null) {
             jsonObject = jsonTree.getAsJsonObject();
         }
 
@@ -81,15 +79,16 @@ public class FromJsonReader {
 
     static Type listItemType = new TypeToken<List<Plugin>>() {}.getType();
 
-    static String wiiu = "[\n" +
-            "    {\n" +
-            "        \"id\": \"WiiU\"\n" +
-            "    }\n" +
-            "]";
+    static List<Plugin> list = gson.fromJson(jsonObject.getAsJsonArray("plugins"), listItemType);
 
-    static List<Plugin> list = gson.fromJson(wiiu, listItemType);
+    public static void aVoid() throws FileNotFoundException {
 
-    public static void aVoid() {
+        Scanner myReader = new Scanner(pluginRegistry);
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            System.out.println(data);
+        }
+        myReader.close();
 
         for (Plugin plugins : list) {
 
@@ -99,8 +98,8 @@ public class FromJsonReader {
 
     }
 
-    public static boolean getWiiUIsBased() {
+    public static boolean getExperimentalFeatures() {
 
-        return jsonTree == null ? true : jsonObject.get("isWiiUBased").getAsBoolean();
+        return jsonTree == null || jsonObject.get("experimental_features") == null ? false : jsonObject.get("experimental_features").getAsBoolean();
     }
 }

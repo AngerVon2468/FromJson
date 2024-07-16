@@ -6,6 +6,8 @@ import org.slf4j.*;
 
 import wiiu.mavity.fromjson.reader.FromJsonReader;
 
+import java.io.FileNotFoundException;
+
 public class FromJson implements ModInitializer {
 
 	public static final String NAME = "FromJson";
@@ -20,6 +22,10 @@ public class FromJson implements ModInitializer {
 		FromJson.LOGGER.info(FromJson.NAME + " has started up!");
 
 		FromJsonReader.genPluginFolderAndFile();
-		FromJsonReader.aVoid();
+		try {
+			FromJsonReader.aVoid();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
