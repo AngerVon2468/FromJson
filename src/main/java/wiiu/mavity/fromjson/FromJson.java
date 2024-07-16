@@ -23,7 +23,7 @@ public class FromJson implements ModInitializer {
 
 		FromJsonReader.genPluginFolderAndFile();
 		try {
-			FromJsonReader.aVoid();
+			FromJsonReader.registerPlugins();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}

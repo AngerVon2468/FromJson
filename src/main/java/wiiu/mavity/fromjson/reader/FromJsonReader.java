@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import wiiu.mavity.fromjson.FromJson;
 import wiiu.mavity.fromjson.plugin.Plugin;
+import wiiu.mavity.fromjson.plugin.PluginRegistry;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -79,7 +80,7 @@ public class FromJsonReader {
 
     }
 
-    public static void aVoid() throws FileNotFoundException {
+    public static void registerPlugins() throws FileNotFoundException {
 
         if (jsonObject != null) {
 
@@ -89,14 +90,15 @@ public class FromJsonReader {
             Scanner myReader = new Scanner(pluginRegistry);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                System.out.println(data);
+                FromJson.LOGGER.info(data);
             }
             myReader.close();
 
-            System.out.println("Plugins:");
+            FromJson.LOGGER.info("Plugins:");
             for (Plugin plugin : plugins) {
 
-                System.out.println(plugin.getId() + stability(plugin));
+                FromJson.LOGGER.info(plugin.getId() + stability(plugin));
+                PluginRegistry.registerPluginFile(plugin, pluginPath);
 
             }
 
