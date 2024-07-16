@@ -3,13 +3,14 @@
 	"id": "fromjson",
 	"version": "1.0.0",
 	"name": "FromJson",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "JSON-based modding library.",
 	"authors": [
 		"Mavity The Madity"
 	],
 	"contact": {
-		"homepage": "",
-		"sources": ""
+		"homepage": "https://github.com/AngerVon2468/FromJson",
+		"issues": "https://github.com/AngerVon2468/FromJson/issues",
+		"sources": "https://github.com/AngerVon2468/FromJson"
 	},
 	"license": "ARR",
 	"icon": "assets/fromjson/icon.png",
