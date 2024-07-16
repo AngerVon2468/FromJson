@@ -3,6 +3,8 @@ package wiiu.mavity.fromjson.reader;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 
+import org.jetbrains.annotations.NotNull;
+
 import wiiu.mavity.fromjson.FromJson;
 import wiiu.mavity.fromjson.plugin.Plugin;
 
@@ -77,26 +79,33 @@ public class FromJsonReader {
 
     }
 
-    static Type listPluginTypes = new TypeToken<List<Plugin>>() {}.getType();
-
-    static List<Plugin> plugins = gson.fromJson(jsonObject.getAsJsonArray("plugins"), listPluginTypes);
-
     public static void aVoid() throws FileNotFoundException {
 
-        Scanner myReader = new Scanner(pluginRegistry);
-        while (myReader.hasNextLine()) {
-            String data = myReader.nextLine();
-            System.out.println(data);
+        if (jsonObject != null) {
+
+            Type listPluginTypes = new TypeToken<List<Plugin>>() {}.getType();
+            List<Plugin> plugins = gson.fromJson(jsonObject.getAsJsonArray("plugins"), listPluginTypes);
+
+            Scanner myReader = new Scanner(pluginRegistry);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+            }
+            myReader.close();
+
+            System.out.println("Plugins:");
+            for (Plugin plugin : plugins) {
+
+                System.out.println(plugin.getId() + stability(plugin));
+
+            }
+
         }
-        myReader.close();
 
-        System.out.println("Plugins:");
-        for (Plugin plugin : plugins) {
+    }
 
-            System.out.println(plugin.getId() + ", Stable: " + plugin.getIsStable());
-
-        }
-
+    public static @NotNull String stability(@NotNull Plugin plugin) {
+        return plugin.getIsStable() != null && plugin.getIsStable() ? ", Stable: " + plugin.getIsStable() : "";
     }
 
     public static boolean getExperimentalFeatures() {
