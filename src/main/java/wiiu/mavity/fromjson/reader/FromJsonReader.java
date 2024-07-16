@@ -111,7 +111,6 @@ public class FromJsonReader {
     }
 
     public boolean getExperimentalFeatures() {
-
         return this.jsonTree == null || this.jsonObject.get("experimental_features") == null ? false : this.jsonObject.get("experimental_features").getAsBoolean();
     }
 }

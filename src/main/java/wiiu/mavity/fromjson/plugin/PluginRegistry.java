@@ -48,4 +48,8 @@ public class PluginRegistry {
     public Object json;
     public JsonElement jsonTree;
     public JsonObject jsonObject;
+
+    public String getItemFile() {
+        return this.jsonTree == null || this.jsonObject.get("item_file") == null ? "" : this.jsonObject.get("item_file").getAsString();
+    }
 }
