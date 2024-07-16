@@ -15,19 +15,31 @@ import java.util.*;
 
 public class FromJsonReader {
 
-    public static String pluginPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "fromjson" + System.getProperty("file.separator") + "plugin";
+    public String pluginPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "fromjson" + System.getProperty("file.separator") + "plugin";
 
-    public static File pluginRegistry = new File(pluginPath, "plugins.json");
+    public String getPluginPath() {
+        return this.pluginPath;
+    }
 
-    public static File pluginFolder = new File(pluginPath);
+    public File pluginRegistry = new File(this.getPluginPath(), "plugins.json");
 
-    public static void genPluginFolderAndFile() {
+    public File getPluginRegistry() {
+        return this.pluginRegistry;
+    }
+
+    public File pluginFolder = new File(this.getPluginPath());
+
+    public File getPluginFolder() {
+        return this.pluginFolder;
+    }
+
+    public void genPluginFolderAndFile() {
 
         if (!pluginFolder.exists()){
             pluginFolder.mkdirs();
         }
         try {
-            if (pluginRegistry.createNewFile()) {
+            if (this.getPluginRegistry().createNewFile()) {
                 FromJson.LOGGER.info("File created: " + pluginRegistry.getName());
             } else {
                 FromJson.LOGGER.info("File already exists.");
@@ -35,59 +47,47 @@ public class FromJsonReader {
         } catch (IOException ioException) {
             FromJson.LOGGER.info(ioException.toString());
         }
-        FromJson.LOGGER.info("experimental_features: " + getExperimentalFeatures());
+        FromJson.LOGGER.info("experimental_features: " + this.getExperimentalFeatures());
 
     }
 
-    public static BufferedReader bufferedReader;
+    public BufferedReader bufferedReader;
 
-    public static Gson gson = new Gson();
+    public Gson gson = new Gson();
 
-    static {
+    public FromJsonReader() {
         try {
-            bufferedReader = new BufferedReader(new FileReader(pluginRegistry));
+            this.bufferedReader = new BufferedReader(new FileReader(this.getPluginRegistry()));
         } catch (FileNotFoundException fileNotFoundException) {
             FromJson.LOGGER.error(fileNotFoundException.toString());
         }
+        if (this.pluginRegistry.exists()) {
 
-    }
+            this.json = this.gson.fromJson(bufferedReader, Object.class);
+            if (this.json != null) {
 
-    public static Object json;
-    public static JsonElement jsonTree;
-
-    static {
-
-        if (pluginRegistry.exists()) {
-
-            json = gson.fromJson(bufferedReader, Object.class);
-            if (json != null) {
-
-                jsonTree = JsonParser.parseString(json.toString());
+                this.jsonTree = JsonParser.parseString(this.json.toString());
 
             }
 
         }
-
-    }
-
-    public static JsonObject jsonObject;
-
-    static {
-
-        if (jsonTree != null) {
-            jsonObject = jsonTree.getAsJsonObject();
+        if (this.jsonTree != null) {
+            this.jsonObject = this.jsonTree.getAsJsonObject();
         }
-
     }
 
-    public static void registerPlugins() throws FileNotFoundException {
+    public Object json;
+    public JsonElement jsonTree;
+    public JsonObject jsonObject;
 
-        if (jsonObject != null) {
+    public void registerPlugins() throws FileNotFoundException {
+
+        if (this.jsonObject != null) {
 
             Type listPluginTypes = new TypeToken<List<Plugin>>() {}.getType();
-            List<Plugin> plugins = gson.fromJson(jsonObject.getAsJsonArray("plugins"), listPluginTypes);
+            List<Plugin> plugins = this.gson.fromJson(this.jsonObject.getAsJsonArray("plugins"), listPluginTypes);
 
-            Scanner myReader = new Scanner(pluginRegistry);
+            Scanner myReader = new Scanner(this.pluginRegistry);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 FromJson.LOGGER.info(data);
@@ -98,7 +98,7 @@ public class FromJsonReader {
             for (Plugin plugin : plugins) {
 
                 FromJson.LOGGER.info(plugin.getId() + stability(plugin));
-                PluginRegistry.registerPluginFile(plugin, pluginPath);
+                PluginRegistry pluginRegistry = new PluginRegistry(plugin, this);
 
             }
 
@@ -110,8 +110,8 @@ public class FromJsonReader {
         return plugin.getIsStable() != null && plugin.getIsStable() ? ", Stable: " + plugin.getIsStable() : "";
     }
 
-    public static boolean getExperimentalFeatures() {
+    public boolean getExperimentalFeatures() {
 
-        return jsonTree == null || jsonObject.get("experimental_features") == null ? false : jsonObject.get("experimental_features").getAsBoolean();
+        return this.jsonTree == null || this.jsonObject.get("experimental_features") == null ? false : this.jsonObject.get("experimental_features").getAsBoolean();
     }
 }

@@ -21,9 +21,10 @@ public class FromJson implements ModInitializer {
 
 		FromJson.LOGGER.info(FromJson.NAME + " has started up!");
 
-		FromJsonReader.genPluginFolderAndFile();
+		FromJsonReader fromJsonReader = new FromJsonReader();
+		fromJsonReader.genPluginFolderAndFile();
 		try {
-			FromJsonReader.registerPlugins();
+			fromJsonReader.registerPlugins();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
