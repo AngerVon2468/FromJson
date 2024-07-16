@@ -4,6 +4,8 @@ import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.*;
 
+import wiiu.mavity.fromjson.reader.FromJsonReader;
+
 public class FromJson implements ModInitializer {
 
 	public static final String NAME = "FromJson";
@@ -16,5 +18,7 @@ public class FromJson implements ModInitializer {
 	public void onInitialize() {
 
 		FromJson.LOGGER.info(FromJson.NAME + " has started up!");
+
+		FromJsonReader.genPluginFolderAndFile();
 	}
 }
