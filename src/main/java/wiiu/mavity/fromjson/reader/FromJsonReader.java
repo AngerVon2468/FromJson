@@ -61,9 +61,9 @@ public class FromJsonReader {
         } catch (FileNotFoundException fileNotFoundException) {
             FromJson.LOGGER.error(fileNotFoundException.toString());
         }
-        if (this.pluginRegistry.exists()) {
+        if (this.getPluginRegistry().exists()) {
 
-            this.json = this.gson.fromJson(bufferedReader, Object.class);
+            this.json = this.gson.fromJson(this.bufferedReader, Object.class);
             if (this.json != null) {
 
                 this.jsonTree = JsonParser.parseString(this.json.toString());
