@@ -85,7 +85,7 @@ public class ItemRegistry {
             for (Item item : items) {
 
                 FromJson.LOGGER.info(item.id);
-                PluginItem wat = this.registerItem(item.id, new PluginItem(new FabricItemSettings()) {
+                PluginItem pluginItem = this.registerItem(item.id, new PluginItem(new FabricItemSettings()) {
 
                     @Override
                     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
