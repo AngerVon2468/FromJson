@@ -1,10 +1,14 @@
 package wiiu.mavity.fromjson.reader;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 
 import wiiu.mavity.fromjson.FromJson;
+import wiiu.mavity.fromjson.plugin.Plugin;
 
 import java.io.*;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class FromJsonReader {
 
@@ -28,7 +32,9 @@ public class FromJsonReader {
         } catch (IOException ioException) {
             FromJson.LOGGER.info(ioException.toString());
         }
+        /*
         FromJson.LOGGER.info(getWiiUIsBased() + "");
+        */
 
     }
 
@@ -69,6 +75,26 @@ public class FromJsonReader {
 
         if (jsonTree != null && jsonTree.isJsonObject()) {
             jsonObject = jsonTree.getAsJsonObject();
+        }
+
+    }
+
+    static Type listItemType = new TypeToken<List<Plugin>>() {}.getType();
+
+    static String wiiu = "[\n" +
+            "    {\n" +
+            "        \"id\": \"WiiU\"\n" +
+            "    }\n" +
+            "]";
+
+    static List<Plugin> list = gson.fromJson(wiiu, listItemType);
+
+    public static void aVoid() {
+
+        for (Plugin plugins : list) {
+
+            System.out.println("Plugin with id " + plugins.getId() + " has loaded");
+
         }
 
     }
