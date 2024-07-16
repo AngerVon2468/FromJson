@@ -77,9 +77,9 @@ public class FromJsonReader {
 
     }
 
-    static Type listItemType = new TypeToken<List<Plugin>>() {}.getType();
+    static Type listPluginTypes = new TypeToken<List<Plugin>>() {}.getType();
 
-    static List<Plugin> list = gson.fromJson(jsonObject.getAsJsonArray("plugins"), listItemType);
+    static List<Plugin> plugins = gson.fromJson(jsonObject.getAsJsonArray("plugins"), listPluginTypes);
 
     public static void aVoid() throws FileNotFoundException {
 
@@ -90,9 +90,10 @@ public class FromJsonReader {
         }
         myReader.close();
 
-        for (Plugin plugins : list) {
+        System.out.println("Plugins:");
+        for (Plugin plugin : plugins) {
 
-            System.out.println("Plugin with id " + plugins.getId() + " has loaded");
+            System.out.println(plugin.getId() + ", Stable: " + plugin.getIsStable());
 
         }
 
