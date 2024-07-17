@@ -74,17 +74,8 @@ public class ItemRegistry {
             Type listItemTypes = new TypeToken<List<Item>>() {}.getType();
             List<Item> items = this.gson.fromJson(this.jsonObject.getAsJsonArray("items"), listItemTypes);
 
-            Scanner myReader = new Scanner(this.itemFile);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                FromJson.LOGGER.info(data);
-            }
-            myReader.close();
-
-            FromJson.LOGGER.info("Items:");
             for (Item item : items) {
 
-                FromJson.LOGGER.info(item.id);
                 PluginItem pluginItem = this.registerItem(item.id, new PluginItem(new FabricItemSettings()) {
 
                     @Override

@@ -2,10 +2,13 @@
     "experimental_features": true,
     "plugins": [
         {
-            "id": "WiiU"
+            "name": "WiiU",
+            "id": "wiiu",
+            "isStable": false
         },
         {
-            "id": "Minecraft",
+            "name": "Minecraft",
+            "id": "minecraft",
             "isStable": true
         }
     ]

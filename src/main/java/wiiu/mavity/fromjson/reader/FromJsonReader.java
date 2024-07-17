@@ -6,8 +6,7 @@ import com.google.gson.*;
 import org.jetbrains.annotations.NotNull;
 
 import wiiu.mavity.fromjson.FromJson;
-import wiiu.mavity.fromjson.plugin.Plugin;
-import wiiu.mavity.fromjson.plugin.PluginRegistry;
+import wiiu.mavity.fromjson.plugin.*;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -87,17 +86,10 @@ public class FromJsonReader {
             Type listPluginTypes = new TypeToken<List<Plugin>>() {}.getType();
             List<Plugin> plugins = this.gson.fromJson(this.jsonObject.getAsJsonArray("plugins"), listPluginTypes);
 
-            Scanner myReader = new Scanner(this.pluginRegistry);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                FromJson.LOGGER.info(data);
-            }
-            myReader.close();
-
             FromJson.LOGGER.info("Plugins:");
             for (Plugin plugin : plugins) {
 
-                FromJson.LOGGER.info(plugin.getId() + stability(plugin));
+                FromJson.LOGGER.info(this.getNullSafeName(plugin) + "id: \"" + plugin.getId() + "\"" + this.getNullSafeStability(plugin));
                 PluginRegistry pluginRegistry = new PluginRegistry(plugin, this);
 
             }
@@ -106,8 +98,28 @@ public class FromJsonReader {
 
     }
 
-    public static @NotNull String stability(@NotNull Plugin plugin) {
-        return plugin.getIsStable() != null && plugin.getIsStable() ? ", Stable: " + plugin.getIsStable() : "";
+    public String getNullSafeStability(@NotNull Plugin plugin) {
+        if (plugin.getIsStable() != null) {
+
+            return ", stable: " + plugin.getIsStable();
+
+        } else {
+
+            return "";
+
+        }
+    }
+
+    public String getNullSafeName(@NotNull Plugin plugin) {
+        if (plugin.getName() != null) {
+
+            return "- " + plugin.getName() + ", ";
+
+        } else {
+
+            return "";
+
+        }
     }
 
     public boolean getExperimentalFeatures() {

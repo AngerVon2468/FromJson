@@ -4,8 +4,8 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.registry.*;
@@ -79,17 +79,8 @@ public class BlockRegistry {
             Type listBlockTypes = new TypeToken<List<wiiu.mavity.fromjson.block.Block>>() {}.getType();
             List<wiiu.mavity.fromjson.block.Block> blocks = this.gson.fromJson(this.jsonObject.getAsJsonArray("blocks"), listBlockTypes);
 
-            Scanner myReader = new Scanner(this.itemFile);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                FromJson.LOGGER.info(data);
-            }
-            myReader.close();
-
-            FromJson.LOGGER.info("Blocks:");
             for (wiiu.mavity.fromjson.block.Block block : blocks) {
 
-                FromJson.LOGGER.info(block.id);
                 Block pluginBlock = registerBlock(block.id,
                         new PluginBlock(FabricBlockSettings.create()) {
                         }
