@@ -5,6 +5,7 @@ import com.google.gson.*;
 import org.jetbrains.annotations.NotNull;
 
 import wiiu.mavity.fromjson.FromJson;
+import wiiu.mavity.fromjson.block.BlockRegistry;
 import wiiu.mavity.fromjson.item.ItemRegistry;
 import wiiu.mavity.fromjson.reader.FromJsonReader;
 
@@ -39,6 +40,7 @@ public class PluginRegistry {
         }
 
         ItemRegistry itemRegistry = new ItemRegistry(this);
+        BlockRegistry blockRegistry = new BlockRegistry(this);
     }
 
     public BufferedReader bufferedReader;
@@ -48,6 +50,10 @@ public class PluginRegistry {
     public JsonObject jsonObject;
 
     public String getItemFile() {
-        return this.jsonTree == null || this.jsonObject.get("item_file") == null ? "" : this.jsonObject.get("item_file").getAsString();
+        return this.jsonTree == null || this.jsonObject.get("item_file") == null ? "items" : this.jsonObject.get("item_file").getAsString();
+    }
+
+    public String getBlockFile() {
+        return this.jsonTree == null || this.jsonObject.get("block_file") == null ? "blocks" : this.jsonObject.get("block_file").getAsString();
     }
 }

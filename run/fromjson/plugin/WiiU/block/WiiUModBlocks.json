@@ -1,0 +1,8 @@
+{
+    "mod_id": "wiiu",
+    "blocks": [
+        {
+            "id": "console"
+        }
+    ]
+}
