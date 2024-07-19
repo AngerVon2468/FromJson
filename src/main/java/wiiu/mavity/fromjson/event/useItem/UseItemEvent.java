@@ -69,11 +69,15 @@ public class UseItemEvent {
 
                     if (dropItem != null && dropItem.id != null) {
 
-                        player.dropItem(new ItemStack(Registries.ITEM.get(new Identifier(dropItem.id))).getItem());
+                        if (dropItem.mod_id != null) {
 
-                    } else if (dropItem != null && dropItem.id != null && dropItem.mod_id != null) {
+                            player.dropItem(new ItemStack(Registries.ITEM.get(new Identifier(dropItem.mod_id, dropItem.id))).getItem());
 
-                        player.dropItem(new ItemStack(Registries.ITEM.get(new Identifier(dropItem.mod_id, dropItem.id))).getItem());
+                        } else {
+
+                            player.dropItem(new ItemStack(Registries.ITEM.get(new Identifier(dropItem.id))).getItem());
+
+                        }
 
                     }
 
