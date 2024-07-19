@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import wiiu.mavity.fromjson.FromJson;
 import wiiu.mavity.fromjson.block.BlockRegistry;
+import wiiu.mavity.fromjson.event.EventRegistry;
 import wiiu.mavity.fromjson.item.ItemRegistry;
 import wiiu.mavity.fromjson.reader.FromJsonReader;
 
@@ -41,6 +42,7 @@ public class PluginRegistry {
 
         ItemRegistry itemRegistry = new ItemRegistry(this);
         BlockRegistry blockRegistry = new BlockRegistry(this);
+        EventRegistry eventRegistry = new EventRegistry(this);
     }
 
     public BufferedReader bufferedReader;
@@ -55,5 +57,9 @@ public class PluginRegistry {
 
     public String getBlockFile() {
         return this.jsonTree == null || this.jsonObject.get("block_file") == null ? "blocks" : this.jsonObject.get("block_file").getAsString();
+    }
+
+    public String getEventFile() {
+        return this.jsonTree == null || this.jsonObject.get("event_file") == null ? "events" : this.jsonObject.get("event_file").getAsString();
     }
 }

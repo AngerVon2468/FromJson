@@ -1,0 +1,11 @@
+{
+    "drop_items": [
+        {
+            "id": "stick"
+        },
+        {
+            "mod_id": "wiiu",
+            "id": "wiiu"
+        }
+    ]
+}
